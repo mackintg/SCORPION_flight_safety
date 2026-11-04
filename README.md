@@ -2,7 +2,7 @@
 
 Experimental code to include object avoidance in SCORPION flight plan optimization.
 
-`rank_leo.py` creates a ranked listing of on-orbit "objects to avoid" in low Earth orbit (LEO). Its purpose is to generate an up-to-date list of objects that the SCORPION flight planning solution should avoid. This demonstrates the ability for SCORPION to include flight safety considerations in its multi-rendezvous flight plan optimization, as a precursor to full integration into NASA's flight plan safety verification procedure.
+`rank_leo.py` creates a ranked listing of on-orbit "objects to avoid" in low Earth orbit (LEO). Its purpose is to generate an up-to-date list of objects that the SCORPION flight planning solution should avoid. Integrating this into SCORPION would demonstrate the ability to include flight safety considerations in its multi-rendezvous flight plan optimization, as a precursor to full integration into NASA's flight plan safety verification procedure.
 
 Contact: Graham Mackintosh, graham.mackintosh@nasa.gov
 
