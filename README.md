@@ -11,7 +11,7 @@ Contact: Graham Mackintosh, graham.mackintosh@nasa.gov
 | Path | Contents |
 |---|---|
 | `rank_leo.py` | The ranking utility |
-| `data/exclusion_zones.csv` | Hand-maintained exclusion-zone table |
+| `data/exclusion_zones.csv` | Hand-maintained exclusion-zone table... I admit this is a bit of a hack; hopefully sources for "official" data can be found |
 | `references/` | Internet shortcuts (`.url`) to NASA Conjunction Assessment Risk Analysis (CARA) resources; further references are linked at the end of this README |
 
 CelesTrak downloads (`data/active.json`, `data/satcat.csv`) and the generated outputs are not tracked; see `.gitignore`.
@@ -34,11 +34,11 @@ A run with no options downloads today's active satellites from CelesTrak, ranks 
 |---|---|---|
 | General perturbations (GP) orbital elements, OMM JSON, active group | `https://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=json` | Orbits, perigee, element-set age, output elements |
 | Satellite catalog (SATCAT) | `https://celestrak.org/satcat/records.php` (active payloads), falling back to `https://celestrak.org/pub/satcat.csv` | Object type, owner, launch date, radar cross section (RCS) |
-| Exclusion-zone table (optional) | `data/exclusion_zones.csv`, maintained by hand | Class, users label, size, exclusion zone and tier per object or family |
+| Exclusion-zone table (optional) | `data/exclusion_zones.csv`, maintained by hand (hack!) | Class, users label, size, exclusion zone and tier per object or family |
 
-CelesTrak updates GP data every 2 hours and refuses a repeat download of the same group within that window. A download run saves `active.json` and `satcat.csv` to `data/` (see `--save-dir`) so you can rerun with `--data-dir data`.
+(Something I ran into...) Note that CelesTrak updates GP data every 2 hours and refuses a repeat download of the same group within that window. A download run saves `active.json` and `satcat.csv` to `data/` (see `--save-dir`) so you can always rerun without a download using `--data-dir data`.
 
-If the download is blocked on your network, fetch the files by hand and use `--data-dir`:
+If the download is blocked on your network, fetch the files using the two links below, save them in the data directory and use `--data-dir`:
 
 ```
 data/active.json  <- https://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=json
@@ -57,11 +57,11 @@ Each object gets a tier, an exclusion-zone volume, a size bin and a score. Objec
 4. Perigee ascending (more drag, faster growth of in-track error)
 5. Element-set age descending
 
-### Tiers and classes
+### Tiers and classes of orbiting objects
 
 Inhabitable objects (the ISS, 25544, and Tiangong, 48274, by default) are tier 0; everything else is tier 1 unless the table says otherwise. Docked station modules that share a station's exact orbital elements are folded into the station row and counted in the `MODULES` column.
 
-### Exclusion zones
+### Exclusion zones around objects
 
 Unless the table sets a shape, exclusion zones follow the FAA launch and reentry collision-avoidance criteria in 14 CFR 450.169:
 
@@ -80,7 +80,7 @@ With `--volume-basis sfsh`, active objects instead get the screening box for the
 | LEO3 | 750 to 1,200 km | 0.4 / 12 / 12 |
 | LEO4 | 1,200 to 2,000 km | 0.4 / 2 / 2 |
 
-### Size bins
+### Exclusion volume size bins
 
 Size is a coarse bin by maximum dimension, solar arrays included:
 
@@ -104,7 +104,7 @@ The output column `SIZE_SOURCE` records which source was used.
 
 ## The exclusion-zone table: `data/exclusion_zones.csv`
 
-The table is optional. Each row describes one object or a family of objects. For each object, the script tries all `ID` rows first, then the `NAME_REGEX` rows in file order, and uses the first row that matches. A matched object takes every non-blank value from that row and ignores later rows, even for columns the winning row leaves blank. Anything still unset falls back to the defaults above. The output column `TABLE_ROW` gives the CSV line number of the row each object matched.
+The table is optional and admittedly a bit of hack until I can find official sources for this info. Each row describes one object or a family of objects. For each object, the script tries all `ID` rows first, then the `NAME_REGEX` rows in file order, and uses the first row that matches. A matched object takes every non-blank value from that row and ignores later rows, even for columns the winning row leaves blank. Anything still unset falls back to the defaults above. The output column `TABLE_ROW` gives the CSV line number of the row each object matched.
 
 | Column | Meaning |
 |---|---|
@@ -168,15 +168,7 @@ Both files hold the top `--list-length` objects (default 100) in the same rank o
 
 ## Runtime considerations
 
-CelesTrak queries have no sort order or ranking, so the full active set (about 7 MB of GP data) is always downloaded and ranked; `--list-length` only trims the outputs.
-
-## Known limitations
-
-- **Size data is sparse.** Public catalog RCS covers only about 3% of active LEO objects and nothing launched after March 2017. Most sizes come from family rows in the table, and several of those (OneWeb, Kuiper, Guowang) are estimates because dimensions are not published. Qianfan and about 2,500 other objects use the default bin.
-- **The RCS-to-dimension factor (2.2) is calibrated on a single object**, the Hubble Space Telescope. Treat RCS-derived bins near a bin edge as uncertain.
-- **The FAA zones come from a launch and reentry rule**, not from on-orbit conjunction screening. The SFSH boxes are on-orbit screening volumes, and the ISS's own debris-avoidance box is smaller than the FAA ellipsoid.
-- **The Starlink generation split is by launch date** and is approximate.
-- **`USERS` labels are not from any official catalog field.**
+CelesTrak queries have no sort order or ranking, so the full active set (about 7 MB of data) is always downloaded and ranked; `--list-length` only trims the outputs. As noted earlier, you cannot repeat downloads within the 2hr Celestrak refresh cadence.
 
 ## References
 
