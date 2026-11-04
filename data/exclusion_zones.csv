@@ -1,0 +1,13 @@
+MATCH_TYPE,MATCH,LAUNCHED_FROM,LAUNCHED_TO,CLASS,USERS,SIZE_BIN,MAX_DIM_M,SIZE_BASIS,SHAPE,R_KM,I_KM,C_KM,TIER,SOURCE,NOTES
+ID,25544,,,inhabitable,civil (international),XL,109,end-to-end length,ELLIPSOID,50,200,50,0,14 CFR 450.169(a)(1)(ii),ISS; docked modules sharing its element set are folded in. On-orbit debris avoidance uses a smaller box (about 4 x 50 x 50 km).
+ID,48274,,,inhabitable,government (PRC),XL,,multi-module station,ELLIPSOID,50,200,50,0,14 CFR 450.169(a)(1)(ii),Tiangong (CSS Tianhe); Mengtian folded in. Span not sourced; tier 0 regardless.
+NAME_REGEX,^STARLINK-,2023-02-27,,active,commercial,L,30,solar array span of V2 Mini,,,,,,https://spaceflightnow.com/2023/02/26/spacex-unveils-first-batch-of-larger-upgraded-starlink-satellites/,Generation split by launch date is approximate: about 1300 Starlinks launched after this date have name numbers below 30000 and some may be V1.5.
+NAME_REGEX,^STARLINK-,,2023-02-26,active,commercial,M,11,end-to-end length of V1.5 with array extended,,,,,,https://spaceflightnow.com/2023/02/26/spacex-unveils-first-batch-of-larger-upgraded-starlink-satellites/,
+NAME_REGEX,^ONEWEB-,,,active,commercial,S,,bus about 1 x 1 x 1.3 m; array span not published,,,,,,https://www.eoportal.org/satellite-missions/oneweb,Could be M if the deployed arrays exceed 4 m.
+NAME_REGEX,^KUIPER-,,,active,commercial,M,,estimate: mass about 571 kg is in the Starlink V1.5 to V2 Mini range; dimensions not published,,,,,,https://space.skyrocket.de/doc_sdat/kuipersat-1.htm,Estimate; revise when dimensions are published.
+NAME_REGEX,^HULIANWANG,,,active,government (PRC),M,,LeoLabs RCS medians 3.8 to 6.2 m2 convert to about 4.8 to 6.2 m,,,,,,https://www.china-in-space.com/p/how-large-are-guowangs-mega-constellation,Guowang; mass and dimensions not officially published.
+NAME_REGEX,^QIANFAN-,,,active,commercial (PRC),,,,,,,,,https://en.wikipedia.org/wiki/Qianfan,Flat-panel design; dimensions not published so the default bin applies.
+NAME_REGEX,^FLOCK,,,active,commercial,XS,,3U CubeSat (Planet Dove),,,,,,,
+NAME_REGEX,^LEMUR,,,active,commercial,XS,,3U CubeSat (Spire),,,,,,,
+NAME_REGEX,^YAOGAN-,,,active,military (open-source reporting),,,,,,,,,,Users label is not from any official catalog field. Size from RCS where available.
+NAME_REGEX,^USA \d+,,,active,military or national security (US government designation),,,,,,,,,,USA-nnn names are assigned to US government payloads.

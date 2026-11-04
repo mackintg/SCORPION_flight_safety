@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+
+# CelesTrak downloads (regenerated on each run; see README)
+data/active.json
+data/satcat.csv
+
+# Generated outputs
+ranked_leo.csv
+ranked_leo.json
+
+# Working notes and documents kept out of the repository
+*.docx
+*.pdf
+
+# Office lock files
+~$*
